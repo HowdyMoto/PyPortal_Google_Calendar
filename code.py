@@ -4,7 +4,7 @@ from adafruit_display_shapes.line import Line
 from adafruit_pyportal import PyPortal
 import rtc
 
-CALENDAR_ID = "wright@ctrlstack.com"
+CALENDAR_ID = "fromsecrets"
 MAX_EVENTS = 5
 REFRESH_TIME = 5
 
@@ -51,6 +51,7 @@ try:
 except ImportError:
     print("WiFi secrets are kept in secrets.py, please add them there!")
     raise
+CALENDAR_ID = secrets["google_email"]
 
 pyportal = PyPortal()
 realTimeClock = rtc.RTC()
