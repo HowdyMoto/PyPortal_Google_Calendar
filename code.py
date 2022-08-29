@@ -8,6 +8,8 @@ CALENDAR_ID = "fromsecrets"
 MAX_EVENTS = 5
 REFRESH_TIME = 5
 
+BACKGROUND_COLOR = 0x000000
+BACKGROUND_ERROR_COLOR = 0x000000
 TITLE_COLOR = 0x00cc00
 TIME_COLOR = 0xFFFFFF
 EVENT_COLOR = 0xFFFFFF
@@ -115,6 +117,7 @@ def get_calendar_events(calendar_id, max_events, time_min):
     resp = pyportal.network.requests.get(url, headers=headers)
     resp_json = resp.json()
     if "error" in resp_json:
+        pyportal.set_background(BACKGROUND_ERROR_COLOR)
         raise RuntimeError("Error:", resp_json)
     resp.close()
     items = []                          # parse the 'items' array so we can iterate over it easier
@@ -126,10 +129,9 @@ def get_calendar_events(calendar_id, max_events, time_min):
     return items
 
 def format_datetime(datetime, pretty_date=False):
-    """Formats ISO-formatted datetime returned by Google Calendar API into a struct_time.
-    :param str datetime: Datetime string returned by Google Calendar API
-    :return: struct_time
-    """
+    #   Formats ISO-formatted datetime returned by Google Calendar API into a struct_time.
+    #   :param str datetime: Datetime string returned by Google Calendar API
+    #   :return: struct_time
     times = datetime.split("T")
     the_date = times[0]
     the_time = times[1]
@@ -189,7 +191,7 @@ def display_calendar_events(resp_events):
         pyportal.set_text("", event_labels[event_idx][0])
         pyportal.set_text("", event_labels[event_idx][1])
 
-pyportal.set_background(0x00000)
+pyportal.set_background(BACKGROUND_COLOR)
 line_header = Line(24, 50, 300, 50, color=TITLE_COLOR)
 pyportal.splash.append(line_header)
 label_header = pyportal.add_text(
@@ -207,15 +209,10 @@ access_token_obtained = int(time.monotonic())
 events = []
 while True:
     # check if we need to refresh token
-    if (
-        int(time.monotonic()) - access_token_obtained
-        >= google_auth.access_token_expiration
-    ):
+    if ( int(time.monotonic()) - access_token_obtained >= google_auth.access_token_expiration ):
         print("Access token expired, refreshing...")
         if not google_auth.refresh_access_token():
-            raise RuntimeError(
-                "Unable to refresh access token - has the token been revoked?"
-            )
+            raise RuntimeError( "Unable to refresh access token - has the token been revoked?" )
         access_token_obtained = int(time.monotonic())
 
     # fetch calendar events!
