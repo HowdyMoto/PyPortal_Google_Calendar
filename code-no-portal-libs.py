@@ -1,3 +1,7 @@
+# A version of the app that doesn't use the PyPortal libraries.
+# I wrote this because I was having some crashes that I wanted to try resolving with an esp.reset(),
+# and it appears that can't be done with the Pyportal libs.
+
 import board
 import busio
 from digitalio import DigitalInOut
