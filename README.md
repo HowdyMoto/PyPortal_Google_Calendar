@@ -1,7 +1,7 @@
 This is a work in progress, nothing to see here.
 
-# PyPortal_Google_Calendar
- Show upcoming events in your Google Calendar on your PyPortal Titano
+# PyPortal Google Calendar
+Show you calendar on a Pyportal Titano, so that you always have clear visibility of it without cluttering your desktop with a calendar and lots of reminders.
  
- From Isaac Wellish's Google Calendar project:
- https://github.com/adafruit/Adafruit_Learning_System_Guides/tree/main/PyPortal_Google_Calendar
+Derived from Isaac Wellish's Google Calendar project:
+https://github.com/adafruit/Adafruit_Learning_System_Guides/tree/main/PyPortal_Google_Calendar
