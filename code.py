@@ -17,6 +17,7 @@ except ImportError:
 CALENDAR_ID = secrets["google_email"]
 MAX_TIME_OFFSET = 24
 ZULU_TIME_OFFSET = secrets["timezone_offset"]
+TWELVE_HOUR_CLOCK_FORMAT = True
 MAX_EVENTS = 5
 REFRESH_TIME = 60
 BACKGROUND_COLOR = 0x000000
@@ -210,14 +211,18 @@ def format_datetime(datetime, pretty_date=False):
     the_time = the_time.split("-")[0]
     if "Z" in the_time:
         the_time = the_time.split("Z")[0]
-    hours, minutes, _ = [int(x) for x in the_time.split(":")]
-    am_pm = "am"
-    if hours >= 12:
-        am_pm = "pm"
-        # convert to 12hr time
-        hours -= 12
-    # via https://github.com/micropython/micropython/issues/3087
-    formatted_time = "{:01d}:{:02d}{:s}".format(hours, minutes, am_pm)
+    print(the_time) # 01:46:27
+    hours, minutes, _ = the_time.split(":", 2)
+    if(TWELVE_HOUR_CLOCK_FORMAT):
+        am_pm = "am"
+        if int(hours) >= 12:
+            am_pm = "pm"
+            # convert to 12hr time
+            hours = int(hours) - 12
+        # via https://github.com/micropython/micropython/issues/3087
+        formatted_time = "{:01d}:{:02d}{:s}".format(int(hours), int(minutes), am_pm)
+    else:
+        formatted_time = "{:01d}:{:02d}".format(int(hours), int(minutes))
     if pretty_date:  # return a nice date for header label
         formatted_date = "{} {}.{:02d}, {:04d} ".format(
             WEEKDAYS[r.datetime[6]], MONTHS[month], mday, year
