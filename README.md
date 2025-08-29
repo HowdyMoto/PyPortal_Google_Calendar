@@ -1,5 +1,5 @@
 # PyPortal Google Calendar
-Show you calendar on a Pyportal Titano, so that you always have clear visibility of it without cluttering your desktop with a calendar and lots of reminders.
+Show your calendar on a Pyportal Titano, so that you always have clear visibility of it without cluttering your desktop with a calendar and lots of reminders.
 
 ### Tested on
 ```
